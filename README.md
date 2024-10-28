@@ -12,18 +12,27 @@ The code is tested under the following environment:
 - scipy==1.10.1
 - tqdm==4.66.5 
 ### Data processing
-To pre-process the data for experiments, please put the original data in folder data (in csv format) and make sure that the csv file meets the following requirements: 
+To pre-process the data for experiments, please put the original data in folder ProcessData/data (in csv format) and make sure that the csv file meets the following requirements: 
 - It should have 5 columns and each row represents a temporal edge
 - The 1st column of each row represents the course node id of the corresponding temporal edge
 - The 2nd column of each row represents the destination node id of the corresponding temporal edge
-- The 3rd column represents the timestamp of the temporal edge
+- The 3rd column represents the timestamp (in Unix format) of the temporal edge
 - The 4th column represents the label of the temporal edge (if the edges do not have label in your dataset, set all to 1)
 - The 5th column represents the feature of the temporal edge (if the edges do not have feature in your dataset, set all to 1)
-Process the original data by running preprocess_data.py under the folder utils
+Process the original data by running ProcessData/preprocess_data.py. Three new files will generate.
 
 ### Model training
 #### TGNs [1]
-Train TGNs with our proposed negative sampling strategy, you first need to move the 
+Train TGNs with our proposed negative sampling strategy, you first need to move the generated files by ProcessData/preprocess_data.py to TGNs/data. Then you can train the model with
+```{bash}
+python TGNs/DINS.py -d DATASET—NAME --use_memory --bs BATCH-SIZE --valid_index INDEX—START-EDGE—VALIDATION-SET --test_index INDEX—START-EDGE—TEST-SET
+```
+
+#### DyGFormer [2]
+Train DyGFormer with our proposed negative sampling strategy, you first need to move the generated files by ProcessData/preprocess_data.py to DyGFormer/processed_data/DATASET-NAME. Then you can train the model with
+```{bash}
+python DyGFormer/DINS.py -d DATASET—NAME --model_name DyGFormer --patch_size 2 --max_input_sequence_length 64 --valid_index INDEX—START-EDGE—VALIDATION-SET --test_index INDEX—START-EDGE—TEST-SET --gpu 0
+```
 
 ## Acknowledgments
 We acknowledge the authors of TGNs[1] and DyGFormer[2]. The implementation of mode TGNs is based on the code released by the authors of TGNs and the implementation of mode DyGFormer and GraphMixer is based on the code released by the authors of DyGFormer.
