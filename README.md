@@ -45,5 +45,7 @@ We acknowledge the authors of TGNs[1] and DyGFormer[2]. The implementation of mo
 
 ## Reference
 [1] Rossi, Emanuele, et al. "Temporal graph networks for deep learning on dynamic graphs." arXiv preprint arXiv:2006.10637 (2020).
+
 [2] Yu, Le, et al. "Towards better dynamic graph learning: New architecture and unified library." Advances in Neural Information Processing Systems 36 (2023): 67686-67700.
+
 [3] Cong, Weilin, et al. "Do we really need complicated model architectures for temporal networks?." arXiv preprint arXiv:2302.11636 (2023).
