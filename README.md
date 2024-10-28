@@ -22,7 +22,8 @@ To pre-process the data for experiments, please put the original data in folder 
 Process the original data by running preprocess_data.py under the folder utils
 
 ### Model training
-
+#### TGNs [1]
+Train TGNs with our proposed negative sampling strategy, you first need to move the 
 
 ## Acknowledgments
 We acknowledge the authors of TGNs[1] and DyGFormer[2]. The implementation of mode TGNs is based on the code released by the authors of TGNs and the implementation of mode DyGFormer and GraphMixer is based on the code released by the authors of DyGFormer.
