@@ -1,1 +1,32 @@
 # DINS
+## Introduction
+Social network platforms like Reddit are increasingly impacting real-world economics. Meme stocks are a recent phenomena where price movements are driven by retail investors organising themselves via social networks. To study the impact of social networks on meme stocks, the first step is to analyse these networks. Going forward, predicting meme stocks' returns would require to predict dynamic interactions first. This is different from conventional link prediction, frequently applied in e.g. recommendation systems. For this task, it is essential to predict more complex interaction dynamics, such as the exact timing and interaction types like loops. These are crucial for linking the network to meme stock price movements. Dynamic graph embedding (DGE) has recently emerged as a promising approach for modeling dynamic graph-structured data. However, current negative sampling strategies, an important component of DGE, are designed for conventional dynamic link prediction and do not capture the specific patterns present in meme stock-related social networks. This limits the training and evaluation of DGE models in analysing such social networks. To overcome this drawback, we propose novel negative sampling strategies based on the analysis of real meme stock-related social networks and financial knowledge. 
+## Running the Experiments
+### Environments
+The code is tested under the following environment:
+- python==3.8.8
+- numpy==1.24.3
+- pandas==1.1.0
+- pytorch==1.13.0
+- scikit-learn==0.23.1
+- scipy==1.10.1
+- tqdm==4.66.5 
+### Data processing
+To pre-process the data for experiments, please put the original data in folder data (in csv format) and make sure that the csv file meets the following requirements: 
+- It should have 5 columns and each row represents a temporal edge
+- The 1st column of each row represents the course node id of the corresponding temporal edge
+- The 2nd column of each row represents the destination node id of the corresponding temporal edge
+- The 3rd column represents the timestamp of the temporal edge
+- The 4th column represents the label of the temporal edge (if the edges do not have label in your dataset, set all to 1)
+- The 5th column represents the feature of the temporal edge (if the edges do not have feature in your dataset, set all to 1)
+Process the original data by running preprocess_data.py under the folder utils
+
+### Model training
+
+
+## Acknowledgments
+We acknowledge the authors of TGNs[1] and DyGFormer[2]. The implementation of mode TGNs is based on the code released by the authors of TGNs and the implementation of mode DyGFormer and GraphMixer is based on the code released by the authors of DyGFormer.
+
+## Reference
+[1] Rossi, Emanuele, et al. "Temporal graph networks for deep learning on dynamic graphs." arXiv preprint arXiv:2006.10637 (2020).
+[2] Yu, Le, et al. "Towards better dynamic graph learning: New architecture and unified library." Advances in Neural Information Processing Systems 36 (2023): 67686-67700.
