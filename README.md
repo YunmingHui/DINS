@@ -45,7 +45,7 @@ python DyGFormer/DINS.py -d DATASET—NAME --model_name GraphMixer --valid_index
 We acknowledge the authors of TGNs[1] and DyGFormer[2]. The implementation of mode TGNs is based on the [code](https://github.com/twitter-research/tgn) released by the authors of TGNs and the implementation of mode DyGFormer and GraphMixer is based on the [code](https://github.com/yule-BUAA/DyGLib) released by the authors of DyGFormer.
 
 ## Cite us
-
+Hui, Yunming, et al. "Domain-Informed Negative Sampling Strategies for Dynamic Graph Embedding in Meme Stock-Related Social Networks." Proceedings of the ACM on Web Conference 2025. 2025.
 
 ## Reference
 [1] Rossi, Emanuele, et al. "Temporal graph networks for deep learning on dynamic graphs." arXiv preprint arXiv:2006.10637 (2020).
