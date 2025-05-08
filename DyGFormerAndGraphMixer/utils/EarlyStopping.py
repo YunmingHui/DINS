@@ -6,7 +6,14 @@ import logging
 
 class EarlyStopping(object):
 
-    def __init__(self, patience: int, save_model_folder: str, save_model_name: str, logger: logging.Logger, model_name: str = None):
+    def __init__(
+        self,
+        patience: int,
+        save_model_folder: str,
+        save_model_name: str,
+        logger: logging.Logger,
+        model_name: str = None,
+    ):
         """
         Early stop strategy.
         :param patience: int, max patience
@@ -22,9 +29,11 @@ class EarlyStopping(object):
         self.logger = logger
         self.save_model_path = os.path.join(save_model_folder, f"{save_model_name}.pkl")
         self.model_name = model_name
-        if self.model_name in ['JODIE', 'DyRep', 'TGN']:
+        if self.model_name in ["JODIE", "DyRep", "TGN"]:
             # path to additionally save the nonparametric data (e.g., tensors) in memory-based models (e.g., JODIE, DyRep, TGN)
-            self.save_model_nonparametric_data_path = os.path.join(save_model_folder, f"{save_model_name}_nonparametric_data.pkl")
+            self.save_model_nonparametric_data_path = os.path.join(
+                save_model_folder, f"{save_model_name}_nonparametric_data.pkl"
+            )
 
     def step(self, metric: list, model: nn.Module):
         """
@@ -54,8 +63,11 @@ class EarlyStopping(object):
         """
         self.logger.info(f"save model {self.save_model_path}")
         torch.save(model.state_dict(), self.save_model_path)
-        if self.model_name in ['JODIE', 'DyRep', 'TGN']:
-            torch.save(model[0].memory_bank.node_raw_messages, self.save_model_nonparametric_data_path)
+        if self.model_name in ["JODIE", "DyRep", "TGN"]:
+            torch.save(
+                model[0].memory_bank.node_raw_messages,
+                self.save_model_nonparametric_data_path,
+            )
 
     def load_checkpoint(self, model: nn.Module, map_location: str = None):
         """
@@ -65,6 +77,10 @@ class EarlyStopping(object):
         :return:
         """
         self.logger.info(f"load model {self.save_model_path}")
-        model.load_state_dict(torch.load(self.save_model_path, map_location=map_location))
-        if self.model_name in ['JODIE', 'DyRep', 'TGN']:
-            model[0].memory_bank.node_raw_messages = torch.load(self.save_model_nonparametric_data_path, map_location=map_location)
+        model.load_state_dict(
+            torch.load(self.save_model_path, map_location=map_location)
+        )
+        if self.model_name in ["JODIE", "DyRep", "TGN"]:
+            model[0].memory_bank.node_raw_messages = torch.load(
+                self.save_model_nonparametric_data_path, map_location=map_location
+            )

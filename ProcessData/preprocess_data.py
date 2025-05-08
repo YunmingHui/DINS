@@ -11,7 +11,7 @@ def preprocess(data_name):
     with open(data_name) as f:
         s = next(f)
         for idx, line in enumerate(f):
-            e = line.strip().split(',')
+            e = line.strip().split(",")
             u = int(e[0])
             i = int(e[1])
 
@@ -27,18 +27,16 @@ def preprocess(data_name):
             idx_list.append(idx)
 
             feat_l.append(feat)
-    return pd.DataFrame({'u': u_list,
-                         'i': i_list,
-                         'ts': ts_list,
-                         'label': label_list,
-                         'idx': idx_list}), np.array(feat_l)
+    return pd.DataFrame(
+        {"u": u_list, "i": i_list, "ts": ts_list, "label": label_list, "idx": idx_list}
+    ), np.array(feat_l)
 
 
 def reindex(df, bipartite=True):
     new_df = df.copy()
     if bipartite:
-        assert (df.u.max() - df.u.min() + 1 == len(df.u.unique()))
-        assert (df.i.max() - df.i.min() + 1 == len(df.i.unique()))
+        assert df.u.max() - df.u.min() + 1 == len(df.u.unique())
+        assert df.i.max() - df.i.min() + 1 == len(df.i.unique())
 
         upper_u = df.u.max() + 1
         new_i = df.i + upper_u
@@ -57,10 +55,10 @@ def reindex(df, bipartite=True):
 
 def run(data_name, bipartite=True):
     Path("data").mkdir(parents=True, exist_ok=True)
-    PATH = './data/{}.csv'.format(data_name)
-    OUT_DF = './data/ml_{}.csv'.format(data_name)
-    OUT_FEAT = './data/ml_{}.npy'.format(data_name)
-    OUT_NODE_FEAT = './data/ml_{}_node.npy'.format(data_name)
+    PATH = "./data/{}.csv".format(data_name)
+    OUT_DF = "./data/ml_{}.csv".format(data_name)
+    OUT_FEAT = "./data/ml_{}.npy".format(data_name)
+    OUT_NODE_FEAT = "./data/ml_{}_node.npy".format(data_name)
 
     df, feat = preprocess(PATH)
     new_df = reindex(df, bipartite)
@@ -76,4 +74,4 @@ def run(data_name, bipartite=True):
     np.save(OUT_NODE_FEAT, rand_feat)
 
 
-run('bb_Mar', False)
+run("bb_Mar", False)

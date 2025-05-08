@@ -16,7 +16,7 @@ def get_link_prediction_metrics(predicts: torch.Tensor, labels: torch.Tensor):
     average_precision = average_precision_score(y_true=labels, y_score=predicts)
     roc_auc = roc_auc_score(y_true=labels, y_score=predicts)
 
-    return {'average_precision': average_precision, 'roc_auc': roc_auc}
+    return {"average_precision": average_precision, "roc_auc": roc_auc}
 
 
 def get_node_classification_metrics(predicts: torch.Tensor, labels: torch.Tensor):
@@ -32,4 +32,4 @@ def get_node_classification_metrics(predicts: torch.Tensor, labels: torch.Tensor
 
     roc_auc = roc_auc_score(y_true=labels, y_score=predicts)
 
-    return {'roc_auc': roc_auc}
+    return {"roc_auc": roc_auc}
