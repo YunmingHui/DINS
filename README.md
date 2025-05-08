@@ -1,7 +1,7 @@
 # DINS
 This repository is for the paper “Domain-Informed Negative Sampling Strategies for Dynamic Graph Embedding in Meme Stock-Related Social Networks”.
 ## Introduction
-Social network platforms like Reddit are increasingly impacting real-world economics. Meme stocks are a recent phenomena where price movements are driven by retail investors organising themselves via social networks. To study the impact of social networks on meme stocks, the first step is to analyse these networks. Going forward, predicting meme stocks' returns would require to predict dynamic interactions first. This is different from conventional link prediction, frequently applied in e.g. recommendation systems. For this task, it is essential to predict more complex interaction dynamics, such as the exact timing and interaction types like loops. These are crucial for linking the network to meme stock price movements. Dynamic graph embedding (DGE) has recently emerged as a promising approach for modeling dynamic graph-structured data. However, current negative sampling strategies, an important component of DGE, are designed for conventional dynamic link prediction and do not capture the specific patterns present in meme stock-related social networks. This limits the training and evaluation of DGE models in analysing such social networks. To overcome this drawback, we propose novel negative sampling strategies based on the analysis of real meme stock-related social networks and financial knowledge. 
+Social network platforms like Reddit are increasingly impacting real-world economics. Meme stocks are a recent phenomena where price movements are driven by retail investors organizing themselves via social networks. To study the impact of social networks on meme stocks, the first step is to analyze these networks. Going forward, predicting meme stocks' returns would require to predict dynamic interactions first. This is different from conventional link prediction, frequently applied in e.g. recommendation systems. For this task, it is essential to predict more complex interaction dynamics, such as the exact timing. These are crucial for linking the network to meme stock price movements. Dynamic graph embedding (DGE) has recently emerged as a promising approach for modeling dynamic graph-structured data. However, current negative sampling strategies, an important component of DGE, are designed for conventional dynamic link prediction and do not capture the specific patterns present in meme stock-related social networks. This limits the training and evaluation of DGE models in such social networks. To overcome this drawback, we propose novel negative sampling strategies based on the analysis of real meme stock-related social networks and financial knowledge. Our experiments show that the proposed negative sampling strategies can better evaluate and train DGE models targeted at meme stock-related social networks compared to existing baselines.
 ## Running the Experiments
 ### Environments
 The code is tested under the following environment:
@@ -45,7 +45,15 @@ python DyGFormer/DINS.py -d DATASET—NAME --model_name GraphMixer --valid_index
 We acknowledge the authors of TGNs[1] and DyGFormer[2]. The implementation of mode TGNs is based on the [code](https://github.com/twitter-research/tgn) released by the authors of TGNs and the implementation of mode DyGFormer and GraphMixer is based on the [code](https://github.com/yule-BUAA/DyGLib) released by the authors of DyGFormer.
 
 ## Cite us
-Yunming Hui, Inez Maria Zwetsloot, Simon Trimborn, and Stevan Rudinac. 2025. Domain-Informed Negative Sampling Strategies for Dynamic Graph Embedding in Meme Stock-Related Social Networks. In Proceedings of the ACM Web Conference 2025 (WWW ’25), April 28-May 2, 2025, Sydney, NSW, Australia. ACM, New York, NY, USA, 12 pages. https://doi.org/10.1145/3696410.3714650
+```bibtex
+@inproceedings{hui2025domain,
+  title={Domain-Informed Negative Sampling Strategies for Dynamic Graph Embedding in Meme Stock-Related Social Networks},
+  author={Hui, Yunming and Zwetsloot, Inez Maria and Trimborn, Simon and Rudinac, Stevan},
+  booktitle={Proceedings of the ACM on Web Conference 2025},
+  pages={518--529},
+  year={2025}
+}
+```
 
 ## Reference
 [1] Rossi, Emanuele, et al. "Temporal graph networks for deep learning on dynamic graphs." arXiv preprint arXiv:2006.10637 (2020).
