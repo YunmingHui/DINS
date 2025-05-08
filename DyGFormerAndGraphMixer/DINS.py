@@ -235,15 +235,15 @@ if __name__ == "__main__":
 
                 # Negative samples for negative loop
                 apperared_no_loop = list(appeared_nodes & non_loop_nodes)
-                negative_source_III = []
-                negative_dest_III = []
-                negative_time_III = []
+                negative_source_loop = []
+                negative_dest_loop = []
+                negative_time_loop = []
                 for i in range(len(batch_src_node_ids)):
                     if batch_src_node_ids[i] == batch_dst_node_ids[i]:
                         negative_node = random.choice(apperared_no_loop)
-                        negative_dest_III.append(negative_node)
-                        negative_source_III.append(negative_node)
-                        negative_time_III.append(batch_node_interact_times[i])
+                        negative_dest_loop.append(negative_node)
+                        negative_source_loop.append(negative_node)
+                        negative_time_loop.append(batch_node_interact_times[i])
 
                 # Negative samples for temporal sampling
                 (
@@ -331,15 +331,15 @@ if __name__ == "__main__":
                         time_gap=args.time_gap,
                     )
 
-                    if len(negative_source_III) > 0:
+                    if len(negative_source_loop) > 0:
                         # get temporal embedding of negative source and negative destination nodes for negative samples negative loop
                         (
-                            batch_neg_src_node_embeddings_III,
-                            batch_neg_dst_node_embeddings_III,
+                            batch_neg_src_node_embeddings_loop,
+                            batch_neg_dst_node_embeddings_loop,
                         ) = model[0].compute_src_dst_node_temporal_embeddings(
-                            src_node_ids=np.array(negative_source_III),
-                            dst_node_ids=np.array(negative_dest_III),
-                            node_interact_times=np.array(negative_time_III),
+                            src_node_ids=np.array(negative_source_loop),
+                            dst_node_ids=np.array(negative_dest_loop),
+                            node_interact_times=np.array(negative_time_loop),
                             num_neighbors=args.num_neighbors,
                             time_gap=args.time_gap,
                         )
@@ -347,8 +347,8 @@ if __name__ == "__main__":
                     if len(sources_batch_appear_after) > 0:
                         # get temporal embedding of negative source and negative destination nodes for negative samples temporal sampling
                         (
-                            batch_neg_src_node_embeddings_IV,
-                            batch_neg_dst_node_embeddings_IV,
+                            batch_neg_src_node_embeddings_temporal,
+                            batch_neg_dst_node_embeddings_temporal,
                         ) = model[0].compute_src_dst_node_temporal_embeddings(
                             src_node_ids=np.array(sources_batch_appear_after),
                             dst_node_ids=np.array(destinations_batch_appear_after),
@@ -360,8 +360,8 @@ if __name__ == "__main__":
                     if len(sources_batch_neg_temporal) > 0:
                         # get temporal embedding of negative source and negative destination nodes for positive samples positive enhancement
                         (
-                            batch_neg_src_node_embeddings_V,
-                            batch_neg_dst_node_embeddings_V,
+                            batch_neg_src_node_embeddings_enhance,
+                            batch_neg_dst_node_embeddings_enhance,
                         ) = model[0].compute_src_dst_node_temporal_embeddings(
                             src_node_ids=np.array(sources_batch_neg_temporal),
                             dst_node_ids=np.array(destinations_batch_neg_temporal),
@@ -392,22 +392,22 @@ if __name__ == "__main__":
                         node_interact_times=batch_node_interact_times,
                     )
 
-                    if len(negative_source_III) > 0:
+                    if len(negative_source_loop) > 0:
                         # get temporal embedding of negative source and negative destination nodes for negative samples negative loop
                         (
-                            batch_neg_src_node_embeddings_III,
-                            batch_neg_dst_node_embeddings_III,
+                            batch_neg_src_node_embeddings_loop,
+                            batch_neg_dst_node_embeddings_loop,
                         ) = model[0].compute_src_dst_node_temporal_embeddings(
-                            src_node_ids=np.array(negative_source_III),
-                            dst_node_ids=np.array(negative_dest_III),
-                            node_interact_times=np.array(negative_time_III),
+                            src_node_ids=np.array(negative_source_loop),
+                            dst_node_ids=np.array(negative_dest_loop),
+                            node_interact_times=np.array(negative_time_loop),
                         )
 
                     if len(sources_batch_appear_after) > 0:
                         # get temporal embedding of negative source and negative destination nodes for negative samples temporal sampling
                         (
-                            batch_neg_src_node_embeddings_IV,
-                            batch_neg_dst_node_embeddings_IV,
+                            batch_neg_src_node_embeddings_temporal,
+                            batch_neg_dst_node_embeddings_temporal,
                         ) = model[0].compute_src_dst_node_temporal_embeddings(
                             src_node_ids=np.array(sources_batch_appear_after),
                             dst_node_ids=np.array(destinations_batch_appear_after),
@@ -417,8 +417,8 @@ if __name__ == "__main__":
                     if len(sources_batch_neg_temporal) > 0:
                         # get temporal embedding of negative source and negative destination nodes for positive samples positive enhancement
                         (
-                            batch_neg_src_node_embeddings_V,
-                            batch_neg_dst_node_embeddings_V,
+                            batch_neg_src_node_embeddings_enhance,
+                            batch_neg_dst_node_embeddings_enhance,
                         ) = model[0].compute_src_dst_node_temporal_embeddings(
                             src_node_ids=np.array(sources_batch_neg_temporal),
                             dst_node_ids=np.array(destinations_batch_neg_temporal),
@@ -466,11 +466,11 @@ if __name__ == "__main__":
                 labels = torch.zeros_like(negative_probabilities)
                 loss += loss_func(input=negative_probabilities, target=labels)
 
-                if len(negative_source_III) > 0:
+                if len(negative_source_loop) > 0:
                     negative_probabilities = (
                         model[1](
-                            input_1=batch_neg_src_node_embeddings_III,
-                            input_2=batch_neg_dst_node_embeddings_III,
+                            input_1=batch_neg_src_node_embeddings_loop,
+                            input_2=batch_neg_dst_node_embeddings_loop,
                         )
                         .squeeze(dim=-1)
                         .sigmoid()
@@ -481,8 +481,8 @@ if __name__ == "__main__":
                 if len(sources_batch_appear_after) > 0:
                     positive_probabilities = (
                         model[1](
-                            input_1=batch_neg_src_node_embeddings_IV,
-                            input_2=batch_neg_dst_node_embeddings_IV,
+                            input_1=batch_neg_src_node_embeddings_temporal,
+                            input_2=batch_neg_dst_node_embeddings_temporal,
                         )
                         .squeeze(dim=-1)
                         .sigmoid()
@@ -493,8 +493,8 @@ if __name__ == "__main__":
                 if len(sources_batch_neg_temporal) > 0:
                     negative_probabilities = (
                         model[1](
-                            input_1=batch_neg_src_node_embeddings_V,
-                            input_2=batch_neg_dst_node_embeddings_V,
+                            input_1=batch_neg_src_node_embeddings_enhance,
+                            input_2=batch_neg_dst_node_embeddings_enhance,
                         )
                         .squeeze(dim=-1)
                         .sigmoid()

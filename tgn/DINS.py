@@ -370,21 +370,21 @@ for i in range(args.n_runs):
 
                 # Negative loop
                 apperared_no_loop = list(appeared_nodes & non_loop_nodes)
-                negative_source_III = []
-                negative_dest_III = []
-                negative_time_III = []
+                negative_source_loop = []
+                negative_dest_loop = []
+                negative_time_loop = []
                 for i in range(size):
                     if sources_batch[i] == destinations_batch[i]:
                         negative_node = random.choice(apperared_no_loop)
-                        negative_dest_III.append(negative_node)
-                        negative_source_III.append(negative_node)
-                        negative_time_III.append(timestamps_batch[i])
-                if len(negative_source_III) > 1:
+                        negative_dest_loop.append(negative_node)
+                        negative_source_loop.append(negative_node)
+                        negative_time_loop.append(timestamps_batch[i])
+                if len(negative_source_loop) > 1:
                     neg_prob = tgn.compute_edge_probabilities_no_negative(
-                        np.array(negative_source_III),
-                        np.array(negative_dest_III),
-                        np.array(negative_time_III),
-                        np.array(edge_idxs_batch[0 : len(negative_source_III)]),
+                        np.array(negative_source_loop),
+                        np.array(negative_dest_loop),
+                        np.array(negative_time_loop),
+                        np.array(edge_idxs_batch[0 : len(negative_source_loop)]),
                         NUM_NEIGHBORS,
                     )
                     with torch.no_grad():
